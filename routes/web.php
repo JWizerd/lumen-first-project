@@ -11,6 +11,12 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+use App\Http\Controllers\ArticleController;
+
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->get('/', 'ArticleController@index');
+    $router->get('article/{id}','ArticleController@single');
+    $router->post('article','ArticleController@saveArticle');
+    $router->put('article/{id}','ArticleController@updateArticle');
+    $router->delete('article/{id}','ArticleController@deleteArticle');
 });
